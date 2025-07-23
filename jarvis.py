@@ -1,6 +1,5 @@
 import time
 import speech_recognition as sr
-import pyttsx3
 import sounddevice as sd
 import numpy as np
 import threading
@@ -8,7 +7,6 @@ import os
 
 #api key setup
 apiKey = os.getenv('GEMINI_API_KEY')
-print(apiKey)
 
 #speach to text
 r = sr.Recognizer()
@@ -50,9 +48,9 @@ def callback(r, audio):
                 text = r.recognize_google(audio)
             #print(text)
                 if "jarvis" in text.lower():
-                    myText += text + ' '
                     print("Hello sir")
-                print(myText)
+                    myText += text + ' '
+                    print(myText)
         except sr.UnknownValueError:
             pass
 
@@ -77,6 +75,7 @@ stream = sd.InputStream(callback=audio_callback)
 stream.start()
 startTime=0
 restartTime = time.time()
+#stop when the bot is thinking.
 while True:
     if mic_volume > 0.3:
         restartTime = time.time()
